@@ -81,7 +81,7 @@ void main() {
 }
 
 void balanceInquiry(balance) {
-  print("Your balance is ${balance}");
+  print("Your balance is \$${balance}");
 }
 
 int withdrawCash(balance) {
@@ -108,7 +108,7 @@ int depositMoney(balance) {
   // validation for wrong type of input
   if (amountDeposit == null || amountDeposit <= 0) {
     print("Invalid amount. Try again.");
-  } else if (amountDeposit > balance) {
+  } else{
     balance += amountDeposit;
     print("You deposited ${amountDeposit}");
     print("Your new balance is \$${balance}");
@@ -134,7 +134,7 @@ int transferMoney(balance) {
   } else {
     balance -= amountTransfer;
     print(
-        "You have successfully transferred ${amountTransfer} to ${accntName} at ${accntNumber}");
+        "You have successfully transferred ${amountTransfer} to ${accntName} with an account number ${accntNumber}");
     print("Your new balance is \$${balance}");
   }
   return balance;
@@ -156,7 +156,7 @@ int payBills(balance) {
   } else {
     balance -= amountBills;
     print(
-        "You have successfully paid \$${amountBills} to ${billerName} at ${accntNumber}");
+        "You have successfully paid \$${amountBills} to ${billerName} with an account number ${accntNumber}");
     print("Your new balance is \$${balance}");
   }
 
