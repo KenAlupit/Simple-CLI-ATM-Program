@@ -16,6 +16,6 @@ Here are the following requirements and features:
 
   - Change Pin
 
-  - pay bills
+  - Pay Bills
 
   - Deposit Money
