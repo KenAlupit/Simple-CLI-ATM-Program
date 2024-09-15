@@ -1,4 +1,4 @@
-# Simple Dart ATM Program
+# Simple CLI ATM Program made in Dart
 
 Here are the following requirements and features:
 
