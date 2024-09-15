@@ -47,6 +47,7 @@ void main()
           case 2:
             print("Enter amount to withdraw:");
             int? amountWithdraw = int.parse(stdin.readLineSync()!);
+
             if (amountWithdraw > balance){
               print("Invalid amount. Try again");
             }else{
@@ -57,16 +58,22 @@ void main()
           case 3:
             print("Enter amount to deposit:");
             int? amountDeposit = int.parse(stdin.readLineSync()!);
+
             balance += amountDeposit;
+
             print("You deposited ${amountDeposit}");
             print("Your new balance is ${balance}");
             break;
           case 4:
             print("Enter name of account holder:");
             String? accntName = stdin.readLineSync();
+
+            print("Enter account number:");
+            String? accntNumber = stdin.readLineSync();
+
             print("Enter amount to transfer:");
-            
             int? amountTransfer = int.parse(stdin.readLineSync()!);
+            
             if (amountTransfer > balance){
               print("Invalid amount. Try again");
             }else{
@@ -78,9 +85,13 @@ void main()
           case 5:
             print("Enter name of biller:");
             String? billerName = stdin.readLineSync();
+
+            print("Enter account number:");
+            String? accntNumber = stdin.readLineSync();
+
             print("Enter amount to pay:");
-         
             int? amountBills = int.parse(stdin.readLineSync()!);
+            
             if (amountBills > balance){
               print("Invalid amount. Try again");
             }else{
