@@ -1,135 +1,178 @@
 // Importing dart:io file
 import 'dart:io';
- 
-void main()
-{
-    const int maxAttempts = 3;
-    int? pin = 1234;
-    int attempts = 0;
-    int balance = 1000;
-    bool isLoginValid = false;
 
-    while(attempts < maxAttempts){
-      print("Enter your pin number:");
-  
-      int? pinInput = int.tryParse(stdin.readLineSync()!);
+void main() {
+  const int maxAttempts = 3;
+  int? pin = 1234;
+  int attempts = 0;
+  int balance = 1000;
+  bool isLoginValid = false;
 
-      if (pinInput != pin){
-        attempts++;
-        if (attempts == maxAttempts){
-          print("Too many failed login attempts.");
-        }else{
-          print("Pin invalid please try again.");
-        }
+  // while loop for entering the pin
+  while (attempts < maxAttempts) {
+    print("Enter your pin number:");
+
+    int? pinInput = int.tryParse(stdin.readLineSync()!);
+
+    if (pinInput != pin) {
+      attempts++;
+      // reached max attempt
+      if (attempts == maxAttempts) {
+        print("Too many failed login attempts.");
+      } else {
+        print("Pin invalid please try again.");
       }
-      else{
-        attempts = 0;
-        isLoginValid = true;
-        break;
-        }
-      }
+    }
+    // if pin input is correct, reset number of attempts and set bool variable "isLoginValid" to true
+    else {
+      attempts = 0;
+      isLoginValid = true;
+      break;
+    }
+  }
 
-      while(isLoginValid){
-        print('Balance Inquiry - [1] \n'
+  // while loop to display the main features of the atm
+  while (isLoginValid) {
+    print('Balance Inquiry - [1] \n'
         'Withdraw Cash - [2]\n'
         'Deposit Money - [3]\n'
         'Transfer Money - [4]\n'
         'Pay Bills - [5]\n'
         'Change Pin - [6]\n'
-        'Exit - [7]'
-        );
-        
-        print("Select an option:");
-        int? choice = int.tryParse(stdin.readLineSync()!);
+        'Exit - [7]');
 
-        if (choice == null) {
-          print("Invalid selection, please try again.");
-          continue;
-        }
+    print("Select an option:");
+    int? choice = int.tryParse(stdin.readLineSync()!);
 
-        switch (choice){
-          case 1:
-            print(" Your balance is ${balance}");
-            break;
-          case 2:
-            print("Enter amount to withdraw:");
-            int? amountWithdraw = int.tryParse(stdin.readLineSync()!);
-
-            if (amountWithdraw == null || amountWithdraw <= 0) {
-              print("Invalid amount. Try again.");
-            } else if (amountWithdraw > balance) {
-              print("Insufficient balance.");
-            } else {
-              balance -= amountWithdraw;
-              print("Your new balance is \$${balance}");
-            }
-            break;
-          case 3:
-            print("Enter amount to deposit:");
-            int? amountDeposit = int.tryParse(stdin.readLineSync()!);
-
-            if (amountDeposit == null || amountDeposit <= 0) {
-              print("Invalid amount. Try again.");
-            } else if (amountDeposit > balance) {
-              balance += amountDeposit;
-              print("You deposited ${amountDeposit}");
-              print("Your new balance is \$${balance}");
-            }
-            break;
-          case 4:
-            print("Enter name of account holder:");
-            String? accntName = stdin.readLineSync();
-
-            print("Enter account number:");
-            String? accntNumber = stdin.readLineSync();
-
-            print("Enter amount to transfer:");
-            int? amountTransfer = int.tryParse(stdin.readLineSync()!);
-            
-            if (amountTransfer == null || amountTransfer <= 0 || amountTransfer > balance){
-              print("Invalid amount. Try again");
-            }else{
-              balance -= amountTransfer;
-              print("You have successfully transferred ${amountTransfer} to ${accntName}");
-              print("Your new balance is \$${balance}");
-            }
-            break;
-          case 5:
-            print("Enter name of biller:");
-            String? billerName = stdin.readLineSync();
-
-            print("Enter account number:");
-            String? accntNumber = stdin.readLineSync();
-
-            print("Enter amount to pay:");
-            int? amountBills = int.tryParse(stdin.readLineSync()!);
-
-
-            if (amountBills == null || amountBills <= 0 || amountBills > balance){
-              print("Invalid amount. Try again");
-            }else{
-              balance -= amountBills;
-              print("You have successfully paid \$${amountBills} to ${billerName}");
-              print("Your new balance is \$${balance}");
-            }
-            break;
-          case 6:
-            print("Enter new pin:");
-            int? newPin = int.tryParse(stdin.readLineSync()!);
-
-            if (newPin == null || newPin == pin) {
-              print("Your new pin cannot be the same as your old pin or invalid.");
-            } else {
-              print("Pin changed successfully.");
-              pin = newPin;
-            }
-            break;
-          case 7:
-            isLoginValid = false;
-            print("Exiting...");
-            break;
-          default:
-            print("Invalid option, please try again.");
-      }
+    // validation for when the user enters a wrong input
+    if (choice == null) {
+      print("Invalid selection, please try again.");
+      continue;
     }
+
+    // switch case for each feature
+    switch (choice) {
+      case 1:
+        balanceInquiry(balance);
+        break;
+      case 2:
+        balance = withdrawCash(balance);
+        break;
+      case 3:
+        balance = depositMoney(balance);
+        break;
+      case 4:
+        balance = transferMoney(balance);
+        break;
+      case 5:
+        balance = payBills(balance);
+        break;
+      case 6:
+        pin = changePin(pin);
+        break;
+      case 7:
+        isLoginValid = false;
+        print("Exiting...");
+        break;
+      default:
+        print("Invalid option, please try again.");
+    }
+  }
+}
+
+void balanceInquiry(balance) {
+  print("Your balance is ${balance}");
+}
+
+int withdrawCash(balance) {
+  print("Enter amount to withdraw:");
+  int? amountWithdraw = int.tryParse(stdin.readLineSync()!);
+  // validation for wrong type of input
+  if (amountWithdraw == null || amountWithdraw <= 0) {
+    print("Invalid amount. Try again.");
+  } // validation for when the user has insufficient balance
+  else if (amountWithdraw > balance) {
+    print("Insufficient balance.");
+  } else {
+    balance -= amountWithdraw;
+    print("Your new balance is \$${balance}");
+  }
+
+  return balance;
+}
+
+int depositMoney(balance) {
+  print("Enter amount to deposit:");
+  int? amountDeposit = int.tryParse(stdin.readLineSync()!);
+
+  // validation for wrong type of input
+  if (amountDeposit == null || amountDeposit <= 0) {
+    print("Invalid amount. Try again.");
+  } else if (amountDeposit > balance) {
+    balance += amountDeposit;
+    print("You deposited ${amountDeposit}");
+    print("Your new balance is \$${balance}");
+  }
+  return balance;
+}
+
+int transferMoney(balance) {
+  print("Enter name of account holder:");
+  String? accntName = stdin.readLineSync();
+
+  print("Enter account number:");
+  String? accntNumber = stdin.readLineSync();
+
+  print("Enter amount to transfer:");
+  int? amountTransfer = int.tryParse(stdin.readLineSync()!);
+
+  // validation for wrong input
+  if (amountTransfer == null ||
+      amountTransfer <= 0 ||
+      amountTransfer > balance) {
+    print("Invalid amount. Try again");
+  } else {
+    balance -= amountTransfer;
+    print(
+        "You have successfully transferred ${amountTransfer} to ${accntName} at ${accntNumber}");
+    print("Your new balance is \$${balance}");
+  }
+  return balance;
+}
+
+int payBills(balance) {
+  print("Enter name of biller:");
+  String? billerName = stdin.readLineSync();
+
+  print("Enter account number:");
+  String? accntNumber = stdin.readLineSync();
+
+  print("Enter amount to pay:");
+  int? amountBills = int.tryParse(stdin.readLineSync()!);
+
+  // validation for wrong input
+  if (amountBills == null || amountBills <= 0 || amountBills > balance) {
+    print("Invalid amount. Try again");
+  } else {
+    balance -= amountBills;
+    print(
+        "You have successfully paid \$${amountBills} to ${billerName} at ${accntNumber}");
+    print("Your new balance is \$${balance}");
+  }
+
+  return balance;
+}
+
+int changePin(pin) {
+  print("Enter new pin:");
+  int? newPin = int.tryParse(stdin.readLineSync()!);
+
+  // validation for wrong input
+  if (newPin == null || newPin == pin) {
+    print("Your new pin cannot be the same as your old pin or invalid.");
+  } else {
+    print("Pin changed successfully.");
+    pin = newPin;
+  }
+  return pin;
 }
