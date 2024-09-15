@@ -2,11 +2,12 @@
 import 'dart:io';
 
 void main() {
-  const int maxAttempts = 3;
-  int? pin = 1234;
-  int attempts = 0;
-  int balance = 1000;
-  bool isLoginValid = false;
+  const int maxAttempts = 3; // Maximum number of login attempts
+
+  int? pin = 1234; // Default PIN (used for login validation)
+  int attempts = 0; // Counter for login attempts
+  int balance = 1000; // Initial account balance
+  bool isLoginValid = false; // Flag to check if login is valid
 
   // while loop for entering the pin
   while (attempts < maxAttempts) {
@@ -14,6 +15,7 @@ void main() {
 
     int? pinInput = int.tryParse(stdin.readLineSync()!);
 
+    // Check if the entered PIN is incorrect
     if (pinInput != pin) {
       attempts++;
       // reached max attempt
@@ -80,13 +82,16 @@ void main() {
   }
 }
 
+// Function to display balance inquiry
 void balanceInquiry(balance) {
   print("Your balance is \$${balance}");
 }
 
+// Function to withdraw cash and update the balance
 int withdrawCash(balance) {
   print("Enter amount to withdraw:");
   int? amountWithdraw = int.tryParse(stdin.readLineSync()!);
+
   // validation for wrong type of input
   if (amountWithdraw == null || amountWithdraw <= 0) {
     print("Invalid amount. Try again.");
@@ -101,6 +106,7 @@ int withdrawCash(balance) {
   return balance;
 }
 
+// Function to deposit money and update the balance
 int depositMoney(balance) {
   print("Enter amount to deposit:");
   int? amountDeposit = int.tryParse(stdin.readLineSync()!);
@@ -116,6 +122,7 @@ int depositMoney(balance) {
   return balance;
 }
 
+// Function to transfer money to another account and update the balance
 int transferMoney(balance) {
   print("Enter name of account holder:");
   String? accntName = stdin.readLineSync();
@@ -140,6 +147,7 @@ int transferMoney(balance) {
   return balance;
 }
 
+// Function to pay bills and update the balance
 int payBills(balance) {
   print("Enter name of biller:");
   String? billerName = stdin.readLineSync();
@@ -163,6 +171,7 @@ int payBills(balance) {
   return balance;
 }
 
+// Function to change the PIN
 int changePin(pin) {
   print("Enter new pin:");
   int? newPin = int.tryParse(stdin.readLineSync()!);
